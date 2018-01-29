@@ -24,9 +24,9 @@ public class DataService {
     public ArrayList<LocationProject> getBootcampLocationWithin10MilesOfZip(int zipcode) {
 
         ArrayList<LocationProject> list = new ArrayList<>();
-        list.add(new LocationProject(53.290f, 6.353f, "Tallaght", "24 New Bancroft Avenue", "slo"));
-        list.add(new LocationProject(53.321f, 6.280f, "Harold's Cross", "11 Mountain View Avenue", "slo"));
-        list.add(new LocationProject(53.265f,  6.229f, "Sandyford", "2 Lambs Cross Dublin 18 Ireland", "slo"));
+        list.add(new LocationProject(-6.306152f, 53.159123f, "Old Military Road", "Powerscourt Mountain, Co. Wicklow, Ireland", "slo"));
+        list.add(new LocationProject(-6.280f, 53.321f, "Harold's Cross", "11 Mountain View Avenue", "slo"));
+        list.add(new LocationProject(-6.229f,  53.265f, "Sandyford", "2 Lambs Cross Dublin 18 Ireland", "slo"));
         return list;
 
     }
