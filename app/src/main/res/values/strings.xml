@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BootCampLocator</string>
+    <string name="title_activity_maps">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="zip_hint">Please insert zip code</string>
+</resources>
