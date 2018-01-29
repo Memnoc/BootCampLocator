@@ -12,9 +12,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smartdroidesign.bootcamplocator.R;
+import com.smartdroidesign.bootcamplocator.model.LocationProject;
+import com.smartdroidesign.bootcamplocator.services.DataService;
+
+import java.util.ArrayList;
 
 public class MainScreenFragment extends Fragment  implements OnMapReadyCallback {
 
@@ -80,8 +85,26 @@ public class MainScreenFragment extends Fragment  implements OnMapReadyCallback 
             Log.v("DONKEY", "Lat: " + latLng.latitude + "Long: " + latLng.longitude);
         }
 
+        updateMapForZip(92284);
+        // 9 - Actually moving the camera where the marker is on the screen
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
+    }
+
+    private void updateMapForZip(int zipcode){
+
+        // Fake data
+        ArrayList<LocationProject> locations = DataService.getInstance().getBootcampLocationWithin10MilesOfZip(zipcode);
+
+        for (int x = 0; x < locations.size(); x++) {
+            LocationProject loc = locations.get(x);
+            MarkerOptions marker = new MarkerOptions().position(new LatLng(loc.getLatitude(), loc.getLongitude()));
+            marker.title(loc.getLocationTitle());
+            marker.snippet(loc.getLocationAddress());
+            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
+            mMap.addMarker(marker);
+
+        }
     }
 
 }
