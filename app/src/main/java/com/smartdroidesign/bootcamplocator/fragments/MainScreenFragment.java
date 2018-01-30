@@ -1,12 +1,18 @@
 package com.smartdroidesign.bootcamplocator.fragments;
 
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,7 +25,10 @@ import com.smartdroidesign.bootcamplocator.R;
 import com.smartdroidesign.bootcamplocator.model.LocationProject;
 import com.smartdroidesign.bootcamplocator.services.DataService;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MainScreenFragment extends Fragment  implements OnMapReadyCallback {
 
@@ -55,6 +64,34 @@ public class MainScreenFragment extends Fragment  implements OnMapReadyCallback 
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        // Setting the text field into the search bar
+        final EditText zipText = (EditText)view.findViewById(R.id.zip_code_text);
+        zipText.setOnKeyListener(new View.OnKeyListener() {
+
+            // Grabbing the text from the search bar when the user presses enter
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && keyCode == KeyEvent.KEYCODE_ENTER) {
+
+                    // Here is where you would check the validity of the zip code in a real-world app
+                    // Also parsing the string into an integer, and pass it over to the  updateMapForZip() functions
+                    String text = zipText.getText().toString();
+                    int zip = Integer.parseInt(text);
+
+                    // Here is where you hide the soft keyboard
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(zipText.getWindowToken(),0);
+
+                    updateMapForZip(zip);
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -84,6 +121,26 @@ public class MainScreenFragment extends Fragment  implements OnMapReadyCallback 
             mMap.addMarker(userMarker);
             Log.v("DONKEY", "Lat: " + latLng.latitude + "Long: " + latLng.longitude);
         }
+
+        // Determining user location with Geocoder using the locale of your device when you don't have a user typing the zip code
+        // this will grab the user's location long and lat provided by Geocoder, convert it to a string, pass it over to updateMapForZip(zip);
+        try {
+            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+            // Grabbing the first address from the array list Address
+            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            // Grabbing the zip code from that list
+            int zip = 0;
+            try {
+                zip = Integer.parseInt(addresses.get(0).getPostalCode());
+            } catch (NumberFormatException e) {
+                System.out.println("assigned value");
+            }
+
+            updateMapForZip(zip);
+        } catch (IOException exception) {
+
+        }
+
 
         updateMapForZip(92284);
         // 9 - Actually moving the camera where the marker is on the screen

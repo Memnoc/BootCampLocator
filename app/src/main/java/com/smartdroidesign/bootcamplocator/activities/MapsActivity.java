@@ -127,7 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // 6 - Getting the user location
     @Override
     public void onLocationChanged(Location location) {
-        Log.v("DONKEY", "Lat: " + location.getLatitude() + "Long: " + location.getLongitude());
+        Log.v("DONKEY", "Long: " + location.getLongitude() + "- Lat: " + location.getLatitude());
         // - 9 Updating the fragment visually whenever the user position changes
         // turning location into latitude and longitude
         mainScreenFragment.setUserMarker(new LatLng(location.getLatitude(), location.getLongitude()));
