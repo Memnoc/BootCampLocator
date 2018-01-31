@@ -22,7 +22,7 @@ public class LocationsListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static LocationsListFragment newInstance(String param1, String param2) {
+    public static LocationsListFragment newInstance() {
         LocationsListFragment fragment = new LocationsListFragment();
 
         return fragment;

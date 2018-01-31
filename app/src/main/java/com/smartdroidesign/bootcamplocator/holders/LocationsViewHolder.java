@@ -21,11 +21,17 @@ public class LocationsViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         locationTitle = (TextView)itemView.findViewById(R.id.location_title);
-        locationTitle = (TextView)itemView.findViewById(R.id.location_address);
+        locationAddress = (TextView)itemView.findViewById(R.id.location_address);
         locationImage = (ImageView)itemView.findViewById(R.id.location_image);
     }
 
     public void updateUI(LocationProject location){
+        String uri = location.getLocationImgUrl();
+        int resource = locationImage.getResources().getIdentifier(uri, null, locationImage.getContext().getPackageName());
+        locationImage.setImageResource(resource);
+        locationTitle.setText(location.getLocationTitle());
+        locationAddress.setText(location.getLocationAddress());
+
 
     }
 }

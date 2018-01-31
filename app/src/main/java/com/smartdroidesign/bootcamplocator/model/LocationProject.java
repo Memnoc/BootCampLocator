@@ -13,6 +13,7 @@ public class LocationProject {
     private String locationTitle;
     private String locationAddress;
     private String locationImgUrl;
+    private final String DRAWABLE  = "drawable/";
 
     public LocationProject(float latitude, float longitude, String locationTitle, String locationAddress, String locationImgUrl) {
         this.longitude = latitude;
@@ -35,7 +36,7 @@ public class LocationProject {
     }
 
     public void setLatitude(float lotitude) {
-        this.latitude = lotitude;
+        this.latitude = latitude;
     }
 
     public String getLocationTitle() {
@@ -60,5 +61,9 @@ public class LocationProject {
 
     public void setLocationImgUrl(String locationImgUrl) {
         this.locationImgUrl = locationImgUrl;
+    }
+
+    public String getImgUri(){
+        return DRAWABLE + locationImgUrl;
     }
 }

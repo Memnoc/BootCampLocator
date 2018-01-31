@@ -58,7 +58,7 @@
             android:layout_height="match_parent" />
 
         <FrameLayout
-            android:id="@+id/location_list"
+            android:id="@+id/conatainer_locations_list"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_alignParentBottom="true">
